@@ -54,3 +54,25 @@ jobs:
 
       - name: Run Semgrep
         uses: semgrep/semgrep-action@v1
+
+
+  trivy:
+    name: Build and Scan Docker Image
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Build Docker Image
+        run: docker build -t enterprise-platform-engineering:ci .
+
+      - name: Scan Docker Image with Trivy
+        uses: aquasecurity/trivy-action@0.28.0
+        with:
+          image-ref: enterprise-platform-engineering:ci
+          format: table
+          exit-code: "1"
+          ignore-unfixed: true
+          vuln-type: os,library
+          severity: CRITICAL,HIGH
