@@ -111,3 +111,11 @@ flowchart TD
 - **Planned:** Terraform-managed AWS infrastructure, Amazon ECR, AWS deployment, Prometheus, and Grafana.
 
 The diagram is rendered by GitHub using Mermaid. It updates when the diagram's source is changed; it does not automatically discover live infrastructure changes.
+
+---
+
+## 📐 Architecture Documentation
+
+View the complete architecture diagram, including the CI pipeline, security scanning, Docker, Kubernetes, and planned AWS infrastructure.
+
+**[View the Enterprise Platform Engineering Architecture Diagram](documentation/architecture/architecture-diagram.md)**
