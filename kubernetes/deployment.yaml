@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: enterprise-platform-api
+  labels:
+    app: enterprise-platform-api
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: enterprise-platform-api
+  template:
+    metadata:
+      labels:
+        app: enterprise-platform-api
+    spec:
+      containers:
+        - name: enterprise-platform-api
+          image: enterprise-platform-engineering:1.1
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8000
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 10
+            periodSeconds: 20
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "64Mi"
+            limits:
+              cpu: "500m"
+              memory: "256Mi"
