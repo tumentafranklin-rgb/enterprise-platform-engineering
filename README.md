@@ -3,51 +3,66 @@
 ## Project Overview
 
 Enterprise Platform Engineering is a hands-on project focused on building
-automated, secure, and observable application delivery workflows.
+secure, automated, and reliable application delivery workflows.
 
-The target design combines CI/CD automation, Infrastructure as Code,
-container security, Kubernetes deployment, monitoring, and operational
-documentation.
+The project demonstrates containerization, automated testing, security
+scanning, and local Kubernetes deployment. Future phases will expand the
+platform with Infrastructure as Code, AWS integration, and monitoring.
 
-## Project Goals
+## Architecture
 
-- Automate application build and test workflows.
-- Integrate security checks into CI/CD.
-- Package applications with Docker.
-- Publish container images to Amazon ECR.
-- Manage AWS infrastructure with reusable Terraform modules.
-- Practice Kubernetes deployment and health checks locally.
-- Explore monitoring with Prometheus and Grafana.
-- Document troubleshooting, rollback, and incident response.
+The current application delivery workflow is:
 
-## Planned Technology Stack
+1. Develop a Python API.
+2. Run automated unit tests.
+3. Build a Docker image.
+4. Scan for exposed secrets using Gitleaks.
+5. Scan source code using Semgrep.
+6. Build and scan the Docker image using Trivy.
+7. Deploy the container to a local Kubernetes cluster using Minikube.
+8. Expose the application through a Kubernetes Service.
 
-- AWS: EC2, ECR, IAM, Systems Manager, VPC, and S3
-- Terraform: Infrastructure as Code
-- Jenkins and GitHub Actions: CI/CD
-- Docker: Containerization
-- Gitleaks, Semgrep, and Trivy: Security scanning
-- Minikube: Local Kubernetes learning environment
-- Prometheus and Grafana: Monitoring and visualization
-- Nexus Repository: Artifact management
+GitHub Actions automatically runs the configured CI workflow on pushes
+to `main` and pull requests targeting `main`.
 
-## Architecture and Workflows
+## Technology Stack
 
-- [Platform Architecture](documentation/architecture/overview.md)
-- [AWS Infrastructure](documentation/architecture/aws-infrastructure.md)
-- [CI/CD Pipeline](documentation/workflows/cicd-pipeline.md)
-- [Terraform Workflow](documentation/workflows/terraform-workflow.md)
-- [Incident Response](documentation/workflows/incident-response.md)
+### Implemented and Tested
 
-## Implementation Status
+- **Python:** Application API and automated unit tests.
+- **Docker:** Container packaging and health checks.
+- **Kubernetes:** Local application deployment and replica management.
+- **Minikube:** Local Kubernetes cluster.
+- **kubectl:** Kubernetes command-line management.
+- **GitHub Actions:** Automated CI workflow.
+- **Gitleaks:** Secret scanning.
+- **Semgrep:** Source-code security scanning.
+- **Trivy:** Container image vulnerability scanning.
+- **Git and GitHub:** Source control and project hosting.
 
-This project is being developed in phases. Planned components will be
-marked as implemented only after they have been configured and tested.
+### Planned
 
-## Cost and Security
+- **AWS:** EC2, ECR, IAM, Systems Manager, VPC, and S3.
+- **Terraform:** Reusable infrastructure modules.
+- **Jenkins:** Additional CI/CD automation.
+- **Prometheus and Grafana:** Monitoring and visualization.
+- **Nexus Repository:** Artifact management.
 
-- Prefer local Kubernetes learning with Minikube over a paid EKS cluster.
-- Review Terraform plans before creating or changing AWS resources.
-- Use least-privilege IAM permissions.
-- Never commit credentials, access keys, tokens, or Terraform state files.
-- Verify security scans and application health before declaring a release successful.
+Planned components will be marked as implemented only after they have
+been configured and tested.
+
+## Application Endpoints
+
+| Endpoint | Purpose |
+|---|---|
+| `/` | Returns the API welcome message and available endpoints. |
+| `/health` | Returns application health information. |
+
+The application listens on port `8000` inside its container.
+
+## Run Locally
+
+### Run the automated tests
+
+```bash
+make test
