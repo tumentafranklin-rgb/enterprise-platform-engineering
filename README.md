@@ -66,3 +66,48 @@ The application listens on port `8000` inside its container.
 
 ```bash
 make test
+
+
+---
+
+## 🏗️ Enterprise Platform Engineering Architecture
+
+This diagram illustrates the application development, security scanning, containerization, and Kubernetes deployment workflow.
+
+```mermaid
+flowchart TD
+    A["Developer"] --> B["GitHub Repository"]
+    B --> C["GitHub Actions CI Pipeline"]
+
+    C --> D["Python Unit Tests"]
+    C --> E["Gitleaks Secret Scanning"]
+    C --> F["Semgrep Code Scanning"]
+    C --> G["Docker Image Build"]
+    G --> H["Trivy Vulnerability Scanning"]
+
+    A --> I["Docker"]
+    I --> J["Application Image v1.1"]
+    J --> K["Minikube Kubernetes Cluster"]
+
+    K --> L["Kubernetes Deployment"]
+    L --> M["API Pod 1"]
+    L --> N["API Pod 2"]
+
+    M --> O["Kubernetes Service"]
+    N --> O
+    O --> P["Application Port 8000"]
+
+    Q["Planned Cloud Infrastructure"] -.-> R["Terraform"]
+    R -.-> S["Amazon ECR"]
+    S -.-> T["AWS Deployment"]
+
+    U["Planned Monitoring"] -.-> V["Prometheus"]
+    V -.-> W["Grafana"]
+```
+
+### Architecture Status
+
+- **Implemented:** GitHub, GitHub Actions, Python, Docker, Gitleaks, Semgrep, Trivy, Kubernetes, and Minikube.
+- **Planned:** Terraform-managed AWS infrastructure, Amazon ECR, AWS deployment, Prometheus, and Grafana.
+
+The diagram is rendered by GitHub using Mermaid. It updates when the diagram's source is changed; it does not automatically discover live infrastructure changes.
